@@ -67,7 +67,6 @@ a:hover{
     border-radius: 15px;
     text-align: center;
     background:#ffffff;
-    border: 1px solid black;
     padding: 10px;
 }
 
@@ -80,6 +79,88 @@ a:hover{
     justify-content: space-around;
 }
 
+/*Outro card*/
+
+.eConta {
+    margin-top: 15px;
+    border-radius: 15px;
+    background: #ffffff;
+    padding: 10px;
+}
+
+.mTitulo{
+    text-align: center;
+}
+
+.lConta{
+    display: flex;
+    flex-wrap:wrap;
+    justify-content: space-around;
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+}
+
+.lConta > div {
+    max-width: 100%;
+}
+
+    .lConta input {
+        border: 2px solid black;
+        background: #D9D9D9;
+        border-radius: 10px;
+        font-size: 15pt;
+    }
+
+#btnMais {
+    width: 100%;
+    background: #000000;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+.aLink{
+    text-align: center;
+}
+
+/*Cards*/
+
+.aReaConta {
+    margin-top: 15px;
+    border-radius: 15px;
+    background: #ffffff;
+    padding: 10px;
+}
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    background: #000000;
+    color: #ffffff;
+    width: 300px;
+    margin: 20px;
+    text-align: center;
+}
+
+    .card img {
+        max-width: 100%;
+    }
+
+    .card button {
+        border-radius: 10px;
+        padding: 5px;
+        margin: 10px;
+        font-weight: bold;
+        color: black;
+    }
 
 @media(max-width: 600px) {
     #menu {
@@ -149,4 +230,8 @@ a:hover{
             top: -7px;
         }
 
+    .lConta {
+        display: flex;
+        justify-content: space-around
+    }
 }
