@@ -12,7 +12,7 @@
             <a asp-action="Privacy" class="btn btn-dark">Meus projetos</a>
         </div>
         <div>
-            <a asp-action="Privacy" class="btn btn-dark">Fale comigo</a>
+            <a class="btn btn-dark" onclick="chamaWhast()">Fale comigo</a>
         </div>
     </div>
 </div> <br />
@@ -72,19 +72,19 @@
     <div class="cards">
 
         <div class="card">
-            <img src="~/imagens/c2.png" alt="Imagem do card 1"> <br />
+            <img src="~/imagens/b1.png" style="border-radius:10px" alt="Imagem do card 1"> <br />
             <h3>
                 Design de interface <br /> Apartir R$ 500
             </h3> <br />
-            <button>+ detalhes</button>
+            <button type="button" data-toggle="modal" data-target="#exampleModal1">+ detalhes</button>
         </div>
 
         <div class="card">
-            <img src="~/imagens/c2.png" alt="Imagem do card 2"> <br />
+            <img src="~/imagens/b2.png" style="border-radius:10px" alt="Imagem do card 2"> <br />
             <h3>
                 App Android ou Windows <br /> Apartir R$ 1000
             </h3>
-            <button>+ detalhes</button>
+            <button type="button" data-toggle="modal" data-target="#exampleModal2">+ detalhes</button>
         </div>
 
         <div class="card">
@@ -92,7 +92,7 @@
             <h3>
                 Site <br />  Apartir R$ 800
             </h3> <br />
-            <button>+ detalhes</button>
+            <button type="button" data-toggle="modal" data-target="#exampleModal3">+ detalhes</button>
         </div>
 
     </div>
@@ -107,3 +107,100 @@
 <br />
 <br />
 <br />
+
+<!-- Modal 1 -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Design de interface</h5>
+                
+            </div>
+            <div class="modal-body">
+               
+                <b>Meu Trabalho como Designer de Interface</b> <br />
+                Sou designer de interface, uma profissão que combina criatividade e tecnologia para criar experiências de usuário agradáveis e funcionais. Meu trabalho envolve várias etapas e habilidades, incluindo design visual, prototipagem, colaboração e testes de usabilidade.<br />
+
+                <b>Design Visual</b> <br />
+                No dia a dia, minha principal função é criar a aparência visual de aplicativos e websites. Utilizo cores, tipografias e elementos gráficos para criar layouts atraentes e que proporcionem uma navegação intuitiva para o usuário. Sempre busco manter a consistência visual em todos os componentes do produto.<br />
+
+                <b> Prototipagem </b> <br />
+                Antes de um design ser implementado, desenvolvo protótipos interativos. Estes protótipos são essenciais para mostrar como o usuário navegará pelo produto, ajudando a identificar possíveis problemas e áreas de melhoria.<br />
+
+                <b>Colaboração </b> <br />
+                Trabalhar como designer de interface exige uma comunicação constante com outros profissionais. Colaboro com designers de UX, desenvolvedores, gerentes de produto e outros stakeholders para garantir que a interface atenda às necessidades dos usuários e aos objetivos do negócio.<br />
+
+                <b> Testes de Usabilidade </b> <br />
+                Uma parte crucial do meu trabalho é conduzir testes de usabilidade. Convido usuários para interagir com o protótipo e fornecer feedback. Com base em suas respostas, faço os ajustes necessários para melhorar a experiência de uso.<br />
+
+                <b> Documentação </b> <br />
+                Por fim, crio guias de estilo e documentação detalhada para garantir que todos os elementos visuais sejam utilizados de forma consistente ao longo do desenvolvimento do produto.<br />
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="chamaWhast()" class="btn btn-primary">Chamar no WhatsApp</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2 -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">App Android ou Windows</h5>
+            </div>
+            <div class="modal-body">
+                
+                <b>Desenvolvimento de Software Sob Medida para Windows e Android</b> <br /><br />
+
+                Transforme suas ideias em realidade com nossos serviços especializados de desenvolvimento de software para Windows e Android. Oferecemos soluções personalizadas, eficientes e de alta qualidade que atendem às suas necessidades específicas.<br />
+
+                <b>Aplicativos Inovadores:</b> Criamos apps intuitivos e funcionais que se destacam no mercado.<br />
+
+                <b>Tecnologia de Ponta:</b> Utilizamos as tecnologias mais recentes para garantir desempenho e segurança.<br />
+
+                <b>Suporte Dedicado:</b> Nossa equipe está pronta para ajudar você em todas as etapas do projeto, do planejamento à implementação.<br />
+
+                Entre em contato agora e leve seu projeto ao próximo nível!
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="chamaWhast()" class="btn btn-primary">Chamar no WhatsApp</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal 3 -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">Site</h5>
+            </div>
+            <div class="modal-body">
+                
+                <b>Desenvolvimento de Sites Personalizados</b> <br /><br />
+
+                Leve sua presença online para o próximo nível com nossos serviços de desenvolvimento de sites personalizados. Criamos websites que são não apenas visualmente atraentes, mas também altamente funcionais e otimizados para SEO.<br />
+
+                <b>Design Responsivo:</b> Websites que se adaptam perfeitamente a qualquer dispositivo, proporcionando uma excelente experiência ao usuário.<br />
+
+                <b>Funcionalidade:</b> Integrações e funcionalidades que atendem às necessidades do seu negócio.<br />
+
+                <b>SEO Otimizado:</b> Estruturas e conteúdos projetados para melhorar seu posicionamento nos motores de busca.<br />
+
+                Transforme suas ideias em um site incrível. Entre em contato hoje e vamos começar!
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="chamaWhast()" class="btn btn-primary">Chamar no WhatsApp</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
