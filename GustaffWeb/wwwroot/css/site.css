@@ -162,8 +162,60 @@ a:hover{
         color: black;
     }
 
-@media(max-width: 600px) {
-    #menu {
+
+.aFor{
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 10%;
+}
+
+.aFor button{
+    width: 100%
+}
+
+/*Este é para o outro layout*/
+
+.nCapa {
+    background: #3C93CD;
+    color: #ffffff;
+    padding: 14px;
+    border-radius: 15px;
+    margin-top: 1%;
+}
+
+.gCapaSobre{
+    background: #ffffff;
+    padding: 10px;
+    border-radius: 15px;
+    margin-top: 10%;
+}
+
+.gCapaSobreDois{
+    display: flex;
+}
+
+.gCapaSobreDois img {
+    width: 100%;
+}
+
+.gAreaImagem{
+    margin: auto;
+    max-width: 400px;
+}
+
+.areaTexto{
+    text-align: center;
+    align-items: center;
+}
+
+.areaTexto p{
+    margin-top: 5%;
+    font-weight: bold;
+}
+
+    @media(max-width: 600px) {
+        #menu {
         display: block;
         position: absolute;
         width: 100%;
@@ -234,4 +286,8 @@ a:hover{
         display: flex;
         justify-content: space-around
     }
+
+        .gCapaSobreDois {
+            display: block;
+        }
 }

@@ -1,0 +1,48 @@
+﻿@model RegisterViewModel
+
+@{
+    ViewBag.Title = "Cadastro de usuario";
+}
+
+
+<div class="aFor">
+    <h1 class="text-center">Criar conta</h1>
+
+    <p class="text-center">
+        Com uma conta Gustaff você terá acesso as nossas aplicações web é assim conhecera de forma melhor o nosso trabalho.
+    </p>
+
+    <div class="form-group">
+
+        <div asp-validation-summary="All"></div>
+
+        <form method="post">
+            <div>
+                <label asp-for="UserName">Digite seu usuario</label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName"></span>
+            </div> <br />
+
+            <div>
+                <label asp-for="Email">Digite seu e-mail</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email"></span>
+            </div><br />
+
+            <div> 
+                <label asp-for="Password">Crie uma senha - </label> <a href="#" class="text-primary">Dica de senha</a>
+                <input asp-for="Password" type="password" class="form-control" />
+                <span asp-validation-for="Password"></span>
+            </div><br />
+
+            <div>
+                <label asp-for="ConfirmPassword">Repita a sua senha</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div><br />
+
+            <button type="submit" class="btn btn-secondary btn-lg">Criar conta</button>
+        </form>
+    </div>
+
+</div>
