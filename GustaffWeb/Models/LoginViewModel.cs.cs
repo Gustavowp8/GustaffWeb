@@ -5,7 +5,7 @@ namespace GustaffWeb.Models
     public class LoginViewModel
     {
         [Required(ErrorMessage = "Nome de usuario e obrigatorio")]
-        public string? Email { get; set; }
+        public string? UserName { get; set; }
 
         [Required(ErrorMessage = "Entre com a senha")]
         [DataType(DataType.Password)]
@@ -13,5 +13,5 @@ namespace GustaffWeb.Models
 
         [Display(Name = "Lembrar-me")]
         public bool RememberMe { get; set; }
-    }
+    } 
 }

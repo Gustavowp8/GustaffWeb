@@ -11,8 +11,8 @@
 <body>
 
     <header id="header">
-       
-        <a id="logo" asp-controller="Home" asp-action="index"> <img src="~/imagens/logoCapa.png" alt="logo" /> </a>
+
+        <a id="logo" asp-controller="Inicio" asp-action="Index"> <img src="~/imagens/logoCapa.png" alt="logo" /> </a>
 
         <nav id="nav">
 
@@ -24,20 +24,25 @@
                 <li>
                     <div class="dropdown show">
                         <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Conta
+                            Olá, @User.Identity.Name
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Register">Criar conta</a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="EsqueciSenha">Recuperar conta</a>
-                            <a class="dropdown-item" asp-controller="Account" asp-action="Register">Porque ter uma conta</a>
+                            <a class="dropdown-item" href="#" onclick="aviso()">Mudar senha</a>
+                            <a class="dropdown-item" href="#" onclick="aviso()">Meu perfil</a>
+                            <a class="dropdown-item" href="#" onclick="aviso()">Ajudar site</a>
+
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                <button type="submit" class="dropdown-item" asp-controller="Account" asp-action="Logout">SAIR</button>
+                            </form>
+
                         </div>
                     </div>
                 </li>
                 <li><a asp-controller="Sites" asp-action="Index">Sites</a></li>
-                <li><a asp-controller="Home" asp-action="Index" onclick="aviso()">Videos</a></li>
-                <li><a asp-controller="Home" asp-action="Index" onclick="aviso()">Contato</a></li>
-            </ul> 
+                <li><a asp-controller="Inicio" asp-action="Index" onclick="aviso()">Videos</a></li>
+                <li><a asp-controller="Inicio" asp-action="Index" onclick="aviso()">Contato</a></li>
+            </ul>
 
         </nav>
 
@@ -49,7 +54,7 @@
         </main>
     </div>
 
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

@@ -57,5 +57,43 @@ namespace GustaffWeb.Controllers
             }
             return View(model);
         }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByNameAsync(model.UserName)
+                            ?? await userManager.FindByEmailAsync(model.UserName);
+
+                if (user != null)
+                {
+                    var result = await signInManager.PasswordSignInAsync(
+                        user.UserName, model.Password, model.RememberMe, false
+                    );
+
+                    if (result.Succeeded)
+                    {
+                        TempData["mensagem"] = MensagemModel.Serializar("Bem-vindo");
+                        return RedirectToAction("Index", "Inicio");
+                    }
+                }
+                ModelState.AddModelError(string.Empty, "Login inválido");
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -1,0 +1,69 @@
+﻿@model GustaffWeb.Models.DespesasModel
+
+<form asp-action="AdicionarGastos" method="post" onsubmit="prepareForSubmit()">
+    <div class="form-group">
+        <label asp-for="Titulo"></label><br />
+        <input class="form-control" asp-for="Titulo" />
+        <span asp-validation-for="Titulo"></span>
+    </div><br />
+
+    <div class="form-group">
+        <label asp-for="@Model.Preco">Preço pago</label>
+        <input asp-for="@Model.Preco" class="form-control" id="preco" placeholder="R$" value="">
+        <span asp-validation-for="@Model.Preco"></span>
+    </div> <br />
+
+    <div class="form-group">
+        <label asp-for="Vencimento">Data de vencimento</label><br />
+        <input class="form-control" asp-for="Vencimento" type="date" />
+        <span asp-validation-for="Vencimento"></span>
+    </div><br />
+
+    <div class="form-group">
+        <label>Despesa fixa</label><br />
+        <input type="radio" asp-for="Fixo" name="Fixo" value="true" id="fixoSim" onchange="toggleFields()"> <label for="fixoSim">SIM</label>
+        <input type="radio" asp-for="Fixo" name="Fixo" value="false" id="fixoNao" onchange="toggleFields()" checked> <label for="fixoNao">NÃO</label>
+        <span asp-validation-for="Fixo"></span>
+    </div><br />
+
+    <div class="form-group" id="parcelasField" style="display: none;">
+        <label asp-for="NumeroParcelas">Número de parcelas</label><br />
+        <input class="form-control" asp-for="NumeroParcelas" />
+        <span asp-validation-for="NumeroParcelas"></span>
+    </div><br />
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+</form>
+
+<script>
+    function toggleFields() {
+        var fixoSim = document.getElementById("fixoSim");
+        var parcelasField = document.getElementById("parcelasField");
+
+        if (fixoSim.checked) {
+            parcelasField.style.display = "block";
+        } else {
+            parcelasField.style.display = "none";
+        }
+    }
+
+    // Chama a função ao carregar a página para assegurar que os campos sejam definidos corretamente
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleFields();
+    });
+
+    // Formata o campo de preço para o Real Brasileiro
+    document.addEventListener('DOMContentLoaded', function () {
+        var precoInput = document.getElementById('preco');
+        precoInput.addEventListener('input', function (e) {
+            var value = e.target.value;
+            value = value.replace(/\D/g, ''); // Remove tudo que não é dígito
+            value = value.replace(/(\d)(\d{2})$/, '$1,$2'); // Coloca a vírgula antes dos últimos 2 dígitos
+            value = value.replace(/(?=(\d{3})+(\D))\B/g, '.'); // Coloca o ponto a cada 3 dígitos
+            e.target.value = value;
+        });
+    });
+</script>

@@ -9,5 +9,7 @@ namespace GustaffWeb.Data
         public Context(DbContextOptions<Context>options) : base(options) { }
 
         public DbSet<NotaModel> Notas { get; set; }
+
+        public DbSet<DespesasModel> Despesas { get; set; }
     }
 }

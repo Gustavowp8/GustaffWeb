@@ -1,0 +1,60 @@
+﻿@model LoginViewModel
+
+@{
+    ViewBag.Title = "Entrar no sistema";
+}
+
+<partial name="_Mensagem"></partial>
+
+<div class="eConta">
+
+    <div class="mTitulo">
+        <h2>Entre com uma conta</h2>
+        <p>
+            Com uma conta Gustaff você terá acesso aos nossos aplicativos online de produtividade é organização pessoal.
+        </p>
+    </div> <br />
+
+    <div class="lConta">
+
+        <div>
+            <img src="~/imagens/c1.png" alt="Exibir" />
+        </div>
+
+        <div>
+
+            <div asp-validation-summary="All" class="text-danger"></div> <br />
+
+            <form method="post">
+                <div>
+                    <label asp-for="UserName">Digite seu e-mail</label><br />
+                    <input asp-for="UserName" />
+                    
+                    <span></span>
+                </div> <br />
+
+                <div>
+                    <label asp-for="Password">Senha</label><br />
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password"></span>
+                </div> <br />
+
+                <div class="lembrar">
+                    <input asp-for="RememberMe" />
+                    @Html.DisplayNameFor(m => m.RememberMe)
+                </div> <br />
+
+                <button id="btnMais" type="submit">Entrar</button>
+            </form> <br />
+
+            <div class="aLink">
+                <a asp-controller="Account" asp-action="Register">Criar conta</a> <br />
+                <a asp-controller="Account" asp-action="EsqueciSenha">Recuperar </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<br />

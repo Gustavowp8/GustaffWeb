@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GustaffWeb.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250303174140_CriarConta")]
-    partial class CriarConta
+    [Migration("20250305013024_EstaPago")]
+    partial class EstaPago
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,47 @@ namespace GustaffWeb.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
+
+            modelBuilder.Entity("GustaffWeb.Models.DespesasModel", b =>
+                {
+                    b.Property<int>("DespesasId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("DespesasId"));
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("Fixo")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("NumeroParcelas")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Pago")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<double>("Preco")
+                        .HasColumnType("double");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("varchar(95)");
+
+                    b.Property<DateTime>("Vencimento")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("DespesasId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Despesas");
+                });
 
             modelBuilder.Entity("GustaffWeb.Models.NotaModel", b =>
                 {
@@ -236,6 +277,17 @@ namespace GustaffWeb.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("GustaffWeb.Models.DespesasModel", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

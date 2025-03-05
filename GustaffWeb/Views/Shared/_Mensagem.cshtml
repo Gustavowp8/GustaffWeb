@@ -1,0 +1,34 @@
+﻿@model GustaffWeb.Models.MensagemModel
+@{
+    if (TempData.ContainsKey("mensagem"))
+    {
+        var mensagem = MensagemModel.Desserializar(TempData["mensagem"].ToString());
+        <script>
+            setTimeout(function() {
+                var alert = document.querySelector('.alert');
+                if (alert) {
+                    alert.style.transition = 'opacity 0.5s';
+                    alert.style.opacity = '0';
+                    setTimeout(function() {
+                        alert.remove();
+                    }, 500);
+                }
+            }, 10000); // 10 segundos
+        </script>
+
+        if (mensagem.Tipo == TipoMensagem.Erro)
+        {
+            <div class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">
+                @mensagem.Texto
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-success mt-3 alert-dismissible fade show" role="alert">
+                @mensagem.Texto
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+    }
+}

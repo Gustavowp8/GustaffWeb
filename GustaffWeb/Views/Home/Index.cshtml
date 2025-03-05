@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LoginViewModel
+
+@{
     ViewData["Title"] = "Pagina inicial";
 }
 
@@ -33,20 +35,28 @@
         </div>
 
         <div>
-            <form>
 
+            <div asp-validation-summary="All"></div>
+
+            <form method="post" asp-controller="Account" asp-action="Login">
                 <div>
-                    <label>Digite seu e-mail</label><br />
-                    <input type="email" />
+                    <label asp-for="UserName">Digite seu e-mail</label><br />
+                    <input asp-for="UserName" />
+                    
                 </div> <br />
 
                 <div>
-                    <label>Senha</label><br />
-                    <input type="password" />
+                    <label asp-for="Password">Senha</label><br />
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password"></span>
                 </div> <br />
 
-                <input id="btnMais" type="submit" value="Entrar" />
+                <div class="lembrar">
+                    <input asp-for="RememberMe" />
+                    @Html.DisplayNameFor(m => m.RememberMe)
+                </div> <br />
 
+                <button id="btnMais" type="submit">Entrar</button>
             </form> <br />
 
             <div class="aLink">
