@@ -1,0 +1,41 @@
+﻿@model GustaffWeb.Models.DespesasModel
+
+@{
+    Layout = "_LayoutApp";
+}
+
+<h2 class="text-center">@Model.Titulo</h2>
+
+<div class="verDetalhes">
+
+    <div>
+
+        <h1>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", @Model.Preco)</h1>
+
+        <p>Vencimento: @Model.Vencimento.ToString("dd/MM/yyyy")</p>
+    </div>
+
+
+        <div class="aBtn">
+
+            <div>
+
+                <form method="post" asp-action="AtualizarStatus" asp-route-id="@Model.DespesasId">
+                    <button type="submit" class="btn btn-primary">
+                        @(Model.Pago ? "JÁ ESTÁ PAGO!" : "PAGO")
+                    </button>
+                </form>
+
+            </div>
+
+            <div>
+                <form method="post" asp-action="Apagar" asp-route-id="@Model.DespesasId">
+                    <button type="submit" class="btn btn-danger">APAGAR</button>
+                </form>
+            </div>
+
+
+        </div>
+
+    
+</div>

@@ -1,8 +1,45 @@
-﻿@model IEnumerable<DespesasModel>
+﻿@model IEnumerable<GustaffWeb.Models.DespesasModel>
 
 @{
     Layout = "_LayoutApp";
+    int mesAtual = DateTime.Now.Month;
+    int anoAtual = DateTime.Now.Year;
+    int mesSelecionado = ViewBag.MesSelecionado ?? mesAtual;
+    var nomeMesSelecionado = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(mesSelecionado);
 }
+
+<div class="areaBoasVindas">
+    <img src="~/icones/u.png" alt="Alternate Text" />
+    <p> Olá, @User.Identity.Name</p>
+</div> <br />
+
+<div class="flex">
+
+    <div class="mNãoPaga">
+        <div class="aIcone">
+            <img src="~/icones/a_pagar.png" alt="Alternate Text" />
+            <p>Falta pagar</p>
+        </div>
+        <div>
+            <h3>
+                @String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", ViewBag.TotalDespesasNaoPagas)
+            </h3>
+        </div>
+    </div>
+
+    <div class="mPagas">
+        <div>
+            <div class="aIcone">
+                <img src="~/icones/ja_pago.png" alt="Alternate Text" />
+                <p>Ja foi pago</p>
+            </div>
+            <h3>
+                @String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", ViewBag.TotalDespesasPagas)
+            </h3>
+        </div>
+    </div>
+
+</div>
 
 @if (TempData.ContainsKey("mensagem"))
 {
@@ -10,25 +47,55 @@
     <partial name="_Mensagem" model="mensagem" />
 }
 
-<h1>Teste pass</h1> 
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalSelectMonth">
+    @nomeMesSelecionado
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalSelectMonth" tabindex="-1" role="dialog" aria-labelledby="exampleModalSelectMonthTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalSelectMonthTitle">Selecionar outro mês</h5>
+                <span aria-hidden="true">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form method="get">
+                    <select class="form-select" name="mes" onchange="this.form.submit()">
+                        @for (int mes = 1; mes <= 12; mes++)
+                        {
+                            var selected = mes == mesSelecionado ? "selected" : "";
+                            var nomeMes = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(mes);
+                            <option value="@mes" selected>@nomeMes</option>
+                        }
+                    </select>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @if (Model.Count() > 0)
 {
-    @foreach(var g in Model)
+    @foreach (var g in Model)
     {
+        var classeAdicional = !g.Pago && g.Vencimento < DateTime.Now ? "mPendente" : (g.Pago ? "mPagoVerde" : "");
 
-        <div class="mPago">
+        if (g.Vencimento.Month == mesSelecionado && g.Vencimento.Year == anoAtual)
+        {
+            <a asp-action="Ver" asp-route-id="@g.DespesasId" id="mdes">
+                <div class="mPago @classeAdicional">
+                    <div>
+                        <h4>@g.Titulo</h4>
+                        <p>@g.Vencimento.ToString("dd/MM/yyyy")</p> <!-- Mostrando apenas a data -->
+                    </div>
 
-            <div>
-                <h4>@g.Titulo</h4>
-                <p>@g.Preco</p>
-            </div>
-
-            <div>
-                <button class="btn btn-sm btn-primary">opções</button>
-            </div>
-
-        </div>
+                    <div>
+                        <h3>@String.Format(new System.Globalization.CultureInfo("pt-BR"), "{0:C}", g.Preco)</h3> <!-- Formatando o preço em Real Brasileiro -->
+                    </div>
+                </div>
+            </a>
+        }
     }
 }
 else
