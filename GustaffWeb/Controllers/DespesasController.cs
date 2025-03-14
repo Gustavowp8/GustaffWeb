@@ -59,11 +59,36 @@ namespace GustaffWeb.Controllers
 
                 if (userId != null)
                 {
-                    model.UserId = userId; // Define o ID do usuário logado
+                    model.UserId = userId;
+
+                    // Salvando a despesa atual
                     db.Despesas.Add(model);
+
+                    // Verificando se é uma despesa fixa e número de parcelas foi definido
+                    if (model.Fixo && model.NumeroParcelas > 1)
+                    {
+                        for (int i = 1; i < model.NumeroParcelas; i++)
+                        {
+                            // Criar uma nova instância de despesa para cada mês adicional
+                            var novaDespesa = new DespesasModel
+                            {
+                                Titulo = model.Titulo,
+                                Preco = model.Preco,
+                                Fixo = model.Fixo,
+                                Pago = false,
+                                NumeroParcelas = model.NumeroParcelas,
+                                Data = DateTime.Now,
+                                Vencimento = model.Vencimento.AddMonths(i),
+                                UserId = userId
+                            };
+
+                            db.Despesas.Add(novaDespesa);
+                        }
+                    }
+
                     await db.SaveChangesAsync();
 
-                    TempData["mensagem"] = MensagemModel.Serializar("Nova despesa adicionada");
+                    TempData["mensagem"] = MensagemModel.Serializar("Nova despesa adicionada com sucesso!");
 
                     return RedirectToAction("Index");
                 }
@@ -72,7 +97,6 @@ namespace GustaffWeb.Controllers
                     ModelState.AddModelError(string.Empty, "Usuário não encontrado.");
                     Debug.WriteLine("Erro: Usuário não encontrado.");
                 }
-                Debug.WriteLine("Erro: ModelState inválido.");
             }
             catch (Exception ex)
             {
