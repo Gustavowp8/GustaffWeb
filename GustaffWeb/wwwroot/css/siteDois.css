@@ -203,6 +203,11 @@ footer {
     background: blue;
 }
 
+#grafico1{
+    width: 500px;
+    height: 500px;
+}
+
 @media (max-width: 920px) {
     nav .menu-btn i {
         display: block;

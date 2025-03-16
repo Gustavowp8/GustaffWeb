@@ -14,6 +14,7 @@ namespace GustaffWeb.Controllers
     {
         private readonly Context db;
         private readonly UserManager<IdentityUser> _userManager;
+        private string userId;
 
         public DespesasController(Context db, UserManager<IdentityUser> userManager)
         {
@@ -146,6 +147,38 @@ namespace GustaffWeb.Controllers
             TempData["mensagem"] = MensagemModel.Serializar("O registro foi apagado!", TipoMensagem.Erro);
 
             return RedirectToAction("Index");
+        }
+
+        //Graficos
+        public IActionResult Graficos()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (userId != null)
+            {
+                // Obtenha as despesas pagas do banco de dados associadas ao usuário
+                var despesasMensais = db.Despesas
+                    .Where(d => d.UserId == userId && d.Pago == true) // Filtra apenas despesas pagas
+                    .GroupBy(d => d.Data.Month) // Agrupa por mês
+                    .Select(g => new
+                    {
+                        Mes = g.Key,
+                        Total = g.Sum(d => d.Preco) // Soma os preços das despesas pagas em cada grupo
+                    })
+                    .ToList();
+
+                // Cria um array com 12 posições para preencher todos os meses
+                var totaisMensais = new double[12];
+                foreach (var item in despesasMensais)
+                {
+                    totaisMensais[item.Mes - 1] = item.Total; // Preenche o array com os totais por mês
+                }
+
+                // Envia os dados para a view
+                ViewBag.GastosMensais = totaisMensais;
+            }
+
+            return View();
         }
     }
 }

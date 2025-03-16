@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "_LayoutApp";
+}
+
+<h2>Teste</h2>
+
+<h2>Gráfico de Gastos Mensais</h2>
+
+<canvas id="grafico1">
+
+</canvas>
+
+<script>
+    const ctx = document.getElementById('grafico1');
+
+    // Dados de despesas mensais pagos enviados pela Controller
+    const despesas = @Html.Raw(Json.Serialize(ViewBag.GastosMensais));
+    const labels = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+    // Descubra o índice do mês com maior despesa paga
+    const maiorGasto = Math.max(...despesas);
+    const indiceMaiorGasto = despesas.indexOf(maiorGasto);
+
+    // Destacar o mês com maior despesa paga usando cor diferente
+    const backgroundColors = despesas.map((valor, index) =>
+        index === indiceMaiorGasto ? 'green' : 'blue'
+    );
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Gastos Mensais Pagos',
+                data: despesas,
+                borderWidth: 1,
+                backgroundColor: backgroundColors // Aplica cores personalizadas
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
