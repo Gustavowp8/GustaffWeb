@@ -159,10 +159,11 @@ namespace GustaffWeb.Controllers
                 // Obtenha as despesas do banco de dados associadas ao usuário
                 var despesasMensais = db.Despesas
                     .Where(d => d.UserId == userId) // Filtra despesas do usuário
-                    .GroupBy(d => d.Data.Month) // Agrupa por mês
+                    .GroupBy(d => new { d.Data.Year, d.Data.Month }) // Agrupa por ano e mês
                     .Select(g => new
                     {
-                        Mes = g.Key,
+                        Ano = g.Key.Year,
+                        Mes = g.Key.Month,
                         TotalPagas = g.Count(d => d.Pago == true), // Conta o número de despesas pagas em cada grupo
                         TotalNaoPagas = g.Count(d => d.Pago == false) // Conta o número de despesas não pagas em cada grupo
                     })
@@ -171,7 +172,7 @@ namespace GustaffWeb.Controllers
                 // Verificação de dados
                 foreach (var item in despesasMensais)
                 {
-                    Console.WriteLine($"Mês: {item.Mes}, Pagas: {item.TotalPagas}, Não Pagas: {item.TotalNaoPagas}");
+                    Console.WriteLine($"Ano: {item.Ano}, Mês: {item.Mes}, Pagas: {item.TotalPagas}, Não Pagas: {item.TotalNaoPagas}");
                 }
 
                 // Cria arrays com 12 posições para preencher todos os meses
@@ -179,8 +180,8 @@ namespace GustaffWeb.Controllers
                 var totaisNaoPagasMensais = new int[12];
                 foreach (var item in despesasMensais)
                 {
-                    totaisPagasMensais[item.Mes - 1] = item.TotalPagas; // Preenche o array com os totais de despesas pagas por mês
-                    totaisNaoPagasMensais[item.Mes - 1] = item.TotalNaoPagas; // Preenche o array com os totais de despesas não pagas por mês
+                    totaisPagasMensais[item.Mes - 1] += item.TotalPagas; // Preenche o array com os totais de despesas pagas por mês
+                    totaisNaoPagasMensais[item.Mes - 1] += item.TotalNaoPagas; // Preenche o array com os totais de despesas não pagas por mês
                 }
 
                 // Verificação de arrays preenchidos
