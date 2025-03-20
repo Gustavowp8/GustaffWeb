@@ -2,40 +2,40 @@
     Layout = "_LayoutApp";
 }
 
-<h2>Teste</h2>
+<h2>Gráfico de Despesas Mensais</h2>
 
-<h2>Gráfico de Gastos Mensais</h2>
-
-<canvas id="grafico1">
-
-</canvas>
+<canvas id="grafico1"></canvas>
 
 <script>
     const ctx = document.getElementById('grafico1');
 
-    // Dados de despesas mensais pagos enviados pela Controller
-    const despesas = @Html.Raw(Json.Serialize(ViewBag.GastosMensais));
-    const labels = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    // Dados de despesas pagas e não pagas mensais enviados pela Controller
+    const despesasPagas = @Html.Raw(Json.Serialize(ViewBag.DespesasPagasMensais));
+    const despesasNaoPagas = @Html.Raw(Json.Serialize(ViewBag.DespesasNaoPagasMensais));
+    const labels = @Html.Raw(Json.Serialize(ViewBag.Labels));
 
-    // Descubra o índice do mês com maior despesa paga
-    const maiorGasto = Math.max(...despesas);
-    const indiceMaiorGasto = despesas.indexOf(maiorGasto);
-
-    // Destacar o mês com maior despesa paga usando cor diferente
-    const backgroundColors = despesas.map((valor, index) =>
-        index === indiceMaiorGasto ? 'green' : 'blue'
-    );
+    // Verificação de dados no console
+    console.log('Despesas Pagas:', despesasPagas);
+    console.log('Despesas Não Pagas:', despesasNaoPagas);
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'bar', // Muda o tipo de gráfico para barras
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Gastos Mensais Pagos',
-                data: despesas,
-                borderWidth: 1,
-                backgroundColor: backgroundColors // Aplica cores personalizadas
-            }]
+            datasets: [
+                {
+                    label: 'Despesas Pagas Mensais',
+                    data: despesasPagas,
+                    borderWidth: 1,
+                    backgroundColor: 'blue' // Cor para despesas pagas
+                },
+                {
+                    label: 'Despesas Não Pagas Mensais',
+                    data: despesasNaoPagas,
+                    borderWidth: 1,
+                    backgroundColor: 'red' // Cor para despesas não pagas
+                }
+            ]
         },
         options: {
             scales: {
