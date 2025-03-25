@@ -52,7 +52,7 @@ namespace GustaffWeb.Controllers
                 }
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    ModelState.AddModelError(string.Empty, error.Description); //testeParaApagar
                 }
             }
             return View(model);
