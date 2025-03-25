@@ -44,6 +44,11 @@
     <footer>
         <div class="aMenu">
             <div>
+                <a class="btn btn-light" asp-controller="Despesas" asp-action="Index">
+                    <img src="~/icones/lista.png" alt="Lista" />
+                </a>
+            </div>
+            <div>
                 <button type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModalCenter">
                     <img src="~/icones/add.png" alt="Adicionar" />
                 </button>
@@ -52,10 +57,11 @@
                 <a class="btn btn-light" asp-controller="Despesas" asp-action="Graficos">
                     <img src="~/icones/gra.png" alt="Gráfico" />
                 </a>
-                
             </div>
             <div>
-                <img src="~/icones/list.png" alt="Lista" />
+                <a class="btn btn-light" asp-controller="Despesas" asp-action="Index">
+                    <img src="~/icones/info.png" alt="Lista" />
+                </a>
             </div>
         </div>
     </footer>

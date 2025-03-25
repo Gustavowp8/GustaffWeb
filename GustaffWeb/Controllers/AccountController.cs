@@ -85,6 +85,7 @@ namespace GustaffWeb.Controllers
                     }
                 }
                 ModelState.AddModelError(string.Empty, "Login inválido");
+                TempData["mensagem"] = MensagemModel.Serializar("Erro");
             }
             return View(model);
         }

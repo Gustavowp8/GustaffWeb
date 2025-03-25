@@ -4,39 +4,27 @@
 
 <h2>Gráfico de Despesas Mensais</h2>
 
-<canvas id="grafico1"></canvas>
+<div>
+    <canvas id="myChart"></canvas>
+</div>
 
 <script>
-    const ctx = document.getElementById('grafico1');
+    const ctx = document.getElementById('myChart');
 
-    // Dados de despesas pagas e não pagas mensais enviados pela Controller
-    const despesasPagas = @Html.Raw(Json.Serialize(ViewBag.DespesasPagasMensais));
-    const despesasNaoPagas = @Html.Raw(Json.Serialize(ViewBag.DespesasNaoPagasMensais));
-    const labels = @Html.Raw(Json.Serialize(ViewBag.Labels));
-
-    // Verificação de dados no console
-    console.log('Despesas Pagas:', despesasPagas);
-    console.log('Despesas Não Pagas:', despesasNaoPagas);
-    console.log('Labels:', labels);
+    const meses = @Html.Raw(Json.Serialize(ViewBag.Meses));
+    const totais = @Html.Raw(Json.Serialize(ViewBag.Totais));
 
     new Chart(ctx, {
-        type: 'bar', // Muda o tipo de gráfico para barras
+        type: 'bar',
         data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Despesas Pagas Mensais',
-                    data: despesasPagas,
-                    borderWidth: 1,
-                    backgroundColor: 'blue' // Cor para despesas pagas
-                },
-                {
-                    label: 'Despesas Não Pagas Mensais',
-                    data: despesasNaoPagas,
-                    borderWidth: 1,
-                    backgroundColor: 'red' // Cor para despesas não pagas
-                }
-            ]
+            labels: meses, // Meses em ordem correta
+            datasets: [{
+                label: 'Despesas (R$)',
+                data: totais,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
         },
         options: {
             scales: {
@@ -47,3 +35,6 @@
         }
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+

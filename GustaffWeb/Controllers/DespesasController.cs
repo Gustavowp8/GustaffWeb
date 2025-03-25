@@ -154,50 +154,25 @@ namespace GustaffWeb.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            if (userId != null)
+            if (userId == null)
             {
-                // Obtenha as despesas do banco de dados associadas ao usuário
-                var despesasMensais = db.Despesas
-                    .Where(d => d.UserId == userId) // Filtra despesas do usuário
-                    .GroupBy(d => new { d.Data.Year, d.Data.Month }) // Agrupa por ano e mês
-                    .Select(g => new
-                    {
-                        Ano = g.Key.Year,
-                        Mes = g.Key.Month,
-                        TotalPagas = g.Count(d => d.Pago == true), // Conta o número de despesas pagas em cada grupo
-                        TotalNaoPagas = g.Count(d => d.Pago == false) // Conta o número de despesas não pagas em cada grupo
-                    })
-                    .ToList();
-
-                // Verificação de dados
-                foreach (var item in despesasMensais)
-                {
-                    Console.WriteLine($"Ano: {item.Ano}, Mês: {item.Mes}, Pagas: {item.TotalPagas}, Não Pagas: {item.TotalNaoPagas}");
-                }
-
-                // Cria arrays com 12 posições para preencher todos os meses
-                var totaisPagasMensais = new int[12];
-                var totaisNaoPagasMensais = new int[12];
-                foreach (var item in despesasMensais)
-                {
-                    totaisPagasMensais[item.Mes - 1] += item.TotalPagas; // Preenche o array com os totais de despesas pagas por mês
-                    totaisNaoPagasMensais[item.Mes - 1] += item.TotalNaoPagas; // Preenche o array com os totais de despesas não pagas por mês
-                }
-
-                // Verificação de arrays preenchidos
-                for (int i = 0; i < 12; i++)
-                {
-                    Console.WriteLine($"Mês: {i + 1}, Pagas: {totaisPagasMensais[i]}, Não Pagas: {totaisNaoPagasMensais[i]}");
-                }
-
-                // Cria os labels dos meses
-                var labels = new string[] { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
-
-                // Envia os dados para a view
-                ViewBag.Labels = labels;
-                ViewBag.DespesasPagasMensais = totaisPagasMensais;
-                ViewBag.DespesasNaoPagasMensais = totaisNaoPagasMensais;
+                TempData["mensagem"] = "Usuário não encontrado.";
+                return RedirectToAction("Index");
             }
+
+            // Filtrando somente despesas pagas e agrupando por mês
+            var dadosGraficos = db.Despesas
+                                  .Where(d => d.UserId == userId && d.Pago == true) // Apenas despesas pagas
+                                  .GroupBy(d => d.Vencimento.Month)
+                                  .Select(g => new
+                                  {
+                                      Mes = g.Key,
+                                      Total = g.Sum(d => d.Preco)
+                                  }).OrderBy(d => d.Mes) // Ordenando pelos meses
+                                  .ToList();
+
+            ViewBag.Meses = dadosGraficos.Select(d => System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(d.Mes)).ToList();
+            ViewBag.Totais = dadosGraficos.Select(d => d.Total).ToList();
 
             return View();
         }

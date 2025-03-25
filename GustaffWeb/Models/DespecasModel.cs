@@ -34,5 +34,5 @@ namespace GustaffWeb.Models
 
         [ForeignKey("UserId")]
         public virtual IdentityUser User { get; set; }
-    }
+    } 
 }
